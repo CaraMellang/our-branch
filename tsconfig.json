@@ -15,7 +15,34 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      // 절대경로 설정
+      "@/*": [
+        "*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@layouts/*": [
+        "layouts/*"
+      ],
+      "@common/*": [
+        "common/*"
+      ],
+      "@pages/*": [
+        "pages/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "types/*": [
+        "types/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
