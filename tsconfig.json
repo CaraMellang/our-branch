@@ -20,28 +20,31 @@
         "*"
       ],
       "@components/*": [
-        "components/*"
+        "src/components/*"
       ],
       "@hooks/*": [
-        "hooks/*"
+        "src/hooks/*"
       ],
       "@layouts/*": [
-        "layouts/*"
+        "src/layouts/*"
       ],
       "@common/*": [
-        "common/*"
+        "src/common/*"
       ],
       "@pages/*": [
-        "pages/*"
+        "src/pages/*"
       ],
       "@utils/*": [
         "src/utils/*"
       ],
-      "types/*": [
-        "types/*"
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@store/*": [
+        "src/store/*"
       ],
       "@styles/*": [
-        "styles/*"
+        "src/styles/*"
       ]
     }
   },
