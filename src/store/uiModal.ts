@@ -33,6 +33,8 @@ export class UiModal {
   };
 
   testResolver = () => {
+    this.isOpen = false;
+    this.modalConfig = null;
     this.promiseRef.resolve(true);
   };
 
