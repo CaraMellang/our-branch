@@ -20,12 +20,12 @@ export class UiSnackBar {
   }
 
   getModalConfig() {
-    return this.modalConfig;
+    return this.snackBarConfig;
   }
-  openModal = (config: ModalConfig) => {
+  openModal = (config: SnackBarConfig) => {
     this.isOpen = true;
     console.log('ㅎㅇ', this.isOpen, config);
-    this.modalConfig = config;
+    this.snackBarConfig = config;
     return new Promise((resolve, reject) => {
       this.promiseRef = { resolve, reject };
     });
@@ -33,19 +33,19 @@ export class UiSnackBar {
 
   testResolver = () => {
     this.isOpen = false;
-    this.modalConfig = null;
+    this.snackBarConfig = null;
     this.promiseRef.resolve(true);
   };
 
   closeModal() {
     this.isOpen = false;
-    this.modalConfig = null;
+    this.snackBarConfig = null;
     this.promiseRef.resolve(false);
   }
 
   submitModal() {
     this.promiseRef.resolve(true);
     this.isOpen = false;
-    this.modalConfig = null;
+    this.snackBarConfig = null;
   }
 }
