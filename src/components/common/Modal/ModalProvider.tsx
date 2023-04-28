@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '@src/store';
-import { useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import type { ModalConfig } from '@store/uiModal.d';
 import { BackDrop } from '@components/base/BackDrop';
 
@@ -45,14 +45,30 @@ export const ModalProvider = observer(() => {
   return (
     <ModalProviderContainer>
       <BackDrop open={uiModal.isOpen} onClose={handleClose} />
-      <ModalProviderSection>
+      <ModalProviderSection
+        onSubmit={(e: FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
+          const target = e.target as HTMLFormElement;
+          console.dir(e.target);
+          console.dir(target.elements);
+          const convert = Array.from(target.elements);
+          console.log(convert, convert[0]?.name);
+        }}
+      >
         <ModalProviderWrapper>
           <ModalProviderTitle>타이틀</ModalProviderTitle>
         </ModalProviderWrapper>
         <ModalProviderWrapper>
-          <ModalProviderContent>내용</ModalProviderContent>
+          <ModalProviderContent>
+            내용
+            <input name={'하이'} />
+            <input name={'하이2'} />
+            <input name={'하이3'} />
+          </ModalProviderContent>
         </ModalProviderWrapper>
-        <ModalProviderActions>버튼들</ModalProviderActions>
+        <ModalProviderActions>
+          버튼들 <button type={'submit'}>하이</button>
+        </ModalProviderActions>
         <ModalProviderWrapper></ModalProviderWrapper>
       </ModalProviderSection>
     </ModalProviderContainer>
@@ -63,7 +79,7 @@ const ModalProviderContainer = styled.div`
   z-index: 1000;
   color: white;
 `;
-const ModalProviderSection = styled.div`
+const ModalProviderSection = styled.form`
   position: fixed;
   top: 50%;
   left: 50%;
