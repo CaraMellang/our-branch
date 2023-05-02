@@ -15,7 +15,12 @@ export default function Home() {
     const is = await modal({
       title: 'dasdas',
       description: 'dasdasd',
-      variant: 'alert'
+      variant: 'alert',
+      inputs: [
+        { name: '1번째', onChange: e => console.error(e.target.name, e.target.value) },
+        { name: '2번째', onChange: e => console.error(e.target.name, e.target.value) },
+        { name: '3번째', onChange: e => console.error(e.target.name, e.target.value) }
+      ]
     });
     console.log('이즈리얼', is);
     window.alert('ㅇㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ');

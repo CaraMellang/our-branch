@@ -3,5 +3,6 @@ import { useStore } from '@src/store';
 
 export function useModal() {
   const uiModal = useStore().uiModal;
+
   return uiModal.openModal;
 }

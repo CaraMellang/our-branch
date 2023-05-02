@@ -1,11 +1,11 @@
 import { makeAutoObservable } from 'mobx';
-import type { ModalConfig } from '@store/uiModal.d';
+import type { ModalConfig, ModalValueType } from '@store/uiModal.d';
 
 export class UiModal {
   isOpen: boolean = false;
   modalConfig: ModalConfig | null = null;
   promiseRef = {
-    resolve: (isConfirm: boolean) => {},
+    resolve: (value: ModalValueType) => {},
     reject: () => {}
   };
 
@@ -32,10 +32,32 @@ export class UiModal {
     });
   };
 
-  testResolver = () => {
+  openPrompt(config: Omit<ModalConfig, 'variant'>) {
+    this.isOpen = true;
+    this.modalConfig = { ...config, variant: 'prompt' };
+    return new Promise((resolve, reject) => {
+      this.promiseRef = { resolve, reject };
+    });
+  }
+  openConfirm(config: Omit<ModalConfig, 'variant'>) {
+    this.isOpen = true;
+    this.modalConfig = { ...config, variant: 'confirm' };
+    return new Promise((resolve, reject) => {
+      this.promiseRef = { resolve, reject };
+    });
+  }
+  openAlert(config: Omit<ModalConfig, 'variant'>) {
+    this.isOpen = true;
+    this.modalConfig = { ...config, variant: 'alert' };
+    return new Promise((resolve, reject) => {
+      this.promiseRef = { resolve, reject };
+    });
+  }
+
+  testResolver = (value: ModalValueType) => {
     this.isOpen = false;
     this.modalConfig = null;
-    this.promiseRef.resolve(true);
+    this.promiseRef.resolve(value);
   };
 
   closeModal() {
@@ -44,8 +66,8 @@ export class UiModal {
     this.promiseRef.resolve(false);
   }
 
-  submitModal() {
-    this.promiseRef.resolve(true);
+  submitModal(value: ModalValueType) {
+    this.promiseRef.resolve(value);
     this.isOpen = false;
     this.modalConfig = null;
   }

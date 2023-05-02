@@ -4,6 +4,8 @@ import { useStore } from '@src/store';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import type { ModalConfig } from '@store/uiModal.d';
 import { BackDrop } from '@components/base/BackDrop';
+import { InputBase } from '@components/base/Inputs';
+import { toJS } from 'mobx';
 
 export const ModalProvider = observer(() => {
   const uiModal = useStore().uiModal;
@@ -12,25 +14,30 @@ export const ModalProvider = observer(() => {
   const promiseRef = useRef<{ resolve: (isConfirm: boolean) => void; reject: () => void }>();
   console.log('야', uiModal.getIsOpen());
 
+  const reRender = uiModal.getModalConfig();
+  const reRenderIsOpen = uiModal.getIsOpen();
+
   const handleClose = (isClose?: boolean) => {
     uiModal.closeModal();
     setConfig(null);
   };
 
   const handleSubmit = () => {
-    uiModal.submitModal();
+    uiModal.submitModal(['asdsa', 'asdasd', '하이 ㅋㅋ']);
     setConfig(null);
   };
 
   useEffect(() => {
-    setConfig(uiModal.getModalConfig());
+    setConfig(toJS(uiModal.getModalConfig()));
     setIsOpen(uiModal.getIsOpen());
     const body = document.querySelector('body') as HTMLBodyElement;
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, []);
+  }, [reRender, reRenderIsOpen]);
+
+  console.log('aasdasdadadasdasdas', config, toJS(uiModal.getModalConfig()), isOpen);
 
   useEffect(() => {
     if (!uiModal.isOpen) {
@@ -41,6 +48,7 @@ export const ModalProvider = observer(() => {
   }, [uiModal.isOpen]);
 
   if (!uiModal.getIsOpen()) return <></>;
+  if (!config) return <></>;
 
   return (
     <ModalProviderContainer>
@@ -52,7 +60,12 @@ export const ModalProvider = observer(() => {
           console.dir(e.target);
           console.dir(target.elements);
           const convert = Array.from(target.elements);
-          console.log(convert, convert[0]?.name);
+          // console.log(convert, convert[0]?.name);
+          console.log(
+            '필터링',
+            convert.filter(f => f.localName === 'input')
+          );
+          handleSubmit();
         }}
       >
         <ModalProviderWrapper>
@@ -61,9 +74,13 @@ export const ModalProvider = observer(() => {
         <ModalProviderWrapper>
           <ModalProviderContent>
             내용
-            <input name={'하이'} />
-            <input name={'하이2'} />
-            <input name={'하이3'} />
+            {/*<ModalInput name={'하이'} />*/}
+            {/*<ModalInput name={'하이2'} />*/}
+            {/*<ModalInput name={'하이3'} />*/}
+            {/*<ModalInput name={'하이3'} />*/}
+            {config?.inputs?.map((r, idx) => (
+              <ModalInput key={idx} {...r} />
+            ))}
           </ModalProviderContent>
         </ModalProviderWrapper>
         <ModalProviderActions>
@@ -96,3 +113,5 @@ const ModalProviderWrapper = styled.div``;
 const ModalProviderTitle = styled.div``;
 const ModalProviderContent = styled.div``;
 const ModalProviderActions = styled.div``;
+
+const ModalInput = styled(InputBase)``;
